@@ -1,16 +1,41 @@
-const express = require("express")
-
-
+import express, {
+  Application,
+  NextFunction,
+  Request,
+  Response,
+  Router,
+} from "express";
+import { config } from "dotenv";
+import mongoose from "mongoose";
+config();
 // express app
-const app = express()
+const app: Application = express();
+const connectionString = process.env.ATLAS_URI || "";
+const noteRoutes: Router = require("./routes/notes");
+const folderRoutes: Router = require("./routes/folders");
+// const userRoutes: Router = require("./routes/users");
 
+app.use(express.json());
+
+mongoose.set("strictQuery", false);
+
+mongoose
+  .connect(connectionString)
+  .then(() => {
+    app.listen(process.env.PORT, () => {
+      console.log(`connected to db & listening on port ${process.env.PORT}`);
+    });
+  })
+  .catch(err => console.log(err));
 
 // listen for request
 
-app.listen(3000, () => {
-    console.log("listening on port 4000")
-})
+app.use((req: Request, res: Response, next: NextFunction) => {
+  res;
+  console.log(req.path, req.method);
+  next();
+});
 
-app.get("/", (req, res) => {
-    res.json({msg: "Welcome to the app"})
-}) 
+app.use("/api/notes", noteRoutes);
+app.use("/api/folders", folderRoutes);
+// app.use("/api/users", userRoutes);
