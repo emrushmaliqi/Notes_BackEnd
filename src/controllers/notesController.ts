@@ -10,12 +10,13 @@ export const getNotes: RequestHandler = async (
   req: Request,
   res: Response
 ): Promise<void> => {
-  const { withFolderNotes } = req.body;
   let notes;
-  if (withFolderNotes) {
+  if (req.url.includes("withFolderNotes")) {
     notes = await Note.find({}).sort({ createdAt: -1 });
   } else {
-    notes = await Note.find({ folder: { $exists: false } });
+    notes = await Note.find({ folder: { $exists: false } }).sort({
+      createdAt: -1,
+    });
   }
   res.status(200).json(notes);
 };

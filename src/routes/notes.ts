@@ -13,6 +13,9 @@ const router: Router = Router();
 // get all notes
 router.get("/", getNotes);
 
+// get all notes with folder Notes
+router.get("/withFolderNotes", getNotes);
+
 // get a folder's notes
 router.get("/folder/:id", getFolderNotes);
 
