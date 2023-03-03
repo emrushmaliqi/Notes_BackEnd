@@ -46,7 +46,7 @@ export const postFolder: RequestHandler = async (
     const { name, notes } = req.body as FolderObj;
     try {
       const folder = await Folder.create({ name, notes });
-      res.status(200).json(folder);
+      res.status(201).json(folder);
     } catch (err) {
       if (err instanceof Error) res.status(400).json({ error: err.message });
     }
@@ -79,7 +79,7 @@ export const deleteFolder: RequestHandler = async (
   res.status(202).json(folder);
 };
 
-// Edit a Folder
+// Update a Folder
 export const patchFolder: RequestHandler = async (
   req: Request,
   res: Response

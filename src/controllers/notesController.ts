@@ -83,7 +83,10 @@ export const postNote: RequestHandler = async (
       });
       res.status(201).json(note);
     } else {
-      const note = await Note.create({ title, content });
+      const note = await Note.create({
+        title,
+        content,
+      });
       res.status(201).json(note);
     }
   } catch (err) {
@@ -111,6 +114,18 @@ export const deleteNote: RequestHandler = async (
     return;
   }
 
+  if (note.folder) {
+    const noteFolder = await Folder.findByIdAndUpdate(note.folder, {
+      $pull: {
+        notes: note.id,
+      },
+    });
+    if (!noteFolder) {
+      res.status(404).json({ error: "No such Note/Folder" });
+      return;
+    }
+  }
+
   res.status(202).json(note);
 };
 
@@ -121,14 +136,14 @@ export const patchNote: RequestHandler = async (
   res: Response
 ): Promise<void> => {
   const { id } = req.params;
-  const { content } = req.body as NoteObj;
+  const { content, title } = req.body as NoteObj;
 
   if (!mongoose.Types.ObjectId.isValid(id)) {
     res.status(400).json({ error: "No such Note" });
     return;
   }
 
-  const note = await Note.findByIdAndUpdate(id, { content });
+  const note = await Note.findByIdAndUpdate(id, { content, title });
 
   if (!note) {
     res.status(404).json({ error: "No such Note" });
