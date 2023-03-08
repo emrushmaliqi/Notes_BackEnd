@@ -7,8 +7,12 @@ import {
   deleteNote,
   patchNote,
 } from "../controllers/notesController";
+import { requireAuth } from "../middleware/requireAuth";
 
 const router: Router = Router();
+
+// authenticate user
+router.use(requireAuth);
 
 // get all notes
 router.get("/", getNotes);

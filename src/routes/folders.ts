@@ -6,7 +6,10 @@ import {
   deleteFolder,
   patchFolder,
 } from "../controllers/foldersController";
+import { requireAuth } from "../middleware/requireAuth";
 const router = Router();
+
+router.use(requireAuth);
 
 // get folders
 router.get("/", getFolders);

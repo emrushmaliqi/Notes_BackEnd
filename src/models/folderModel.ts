@@ -10,6 +10,10 @@ const folderSchema = new mongoose.Schema(
       type: Array<ObjectId>,
       required: true,
     },
+    user: {
+      type: String,
+      required: true,
+    },
   },
   { timestamps: true }
 );

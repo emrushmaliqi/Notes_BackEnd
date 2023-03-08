@@ -15,7 +15,10 @@
     "noUnusedLocals": true,
     "noUnusedParameters": false,
     "noImplicitReturns": true,
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "typeRoots": ["src/types"]
   },
-  "include": ["./src"]
+  "include": ["./src"],
+
+  "ts-node": { "files": true }
 }

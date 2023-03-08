@@ -11,6 +11,10 @@ const noteSchema = new Schema(
       required: true,
     },
     folder: String,
+    user: {
+      type: String,
+      required: true,
+    },
   },
   { timestamps: true }
 );

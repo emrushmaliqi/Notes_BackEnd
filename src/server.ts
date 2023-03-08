@@ -13,7 +13,7 @@ const app: Application = express();
 const connectionString = process.env.ATLAS_URI || "";
 const noteRoutes: Router = require("./routes/notes");
 const folderRoutes: Router = require("./routes/folders");
-// const userRoutes: Router = require("./routes/users");
+const userRoutes: Router = require("./routes/user");
 
 app.use(express.json());
 
@@ -38,4 +38,4 @@ app.use((req: Request, res: Response, next: NextFunction) => {
 
 app.use("/api/notes", noteRoutes);
 app.use("/api/folders", folderRoutes);
-// app.use("/api/users", userRoutes);
+app.use("/api/user", userRoutes);

@@ -1,25 +1,17 @@
 import { Schema, model } from "mongoose";
 
-const folderSchema = new Schema(
-  {
-    firstName: {
-      type: String,
-      required: true,
-    },
-    lastName: {
-      type: String,
-      required: true,
-    },
-    email: {
-      type: String,
-      required: true,
-    },
-    password: {
-      type: String,
-      required: true,
-    },
+const userSchema = new Schema({
+  email: {
+    type: String,
+    required: true,
+    unique: true,
   },
-  { timestamps: true }
-);
+  password: {
+    type: String,
+    required: true,
+  },
+});
 
-module.exports = model("Folder", folderSchema);
+const userModel = model("User", userSchema);
+
+export default userModel;
